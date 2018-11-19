@@ -26,4 +26,26 @@ public class WeatherDataTest {
         int receivedSpread = dailyWeather.getSpread();
         Assert.assertEquals("getSpread", expectedSpread, receivedSpread);
     }
+    @Test
+    public void weatherDataTest_sortBySpread() {
+
+        int id1 = 2;
+        int minValue1 = 55;
+        int maxValue1 = 85;
+        int id2 = 23;
+        int minValue2 = 66;
+        int maxValue2 = 68;
+        int expectedId = id2;
+        int expectedSpread = 2;
+
+        DailyWeather dailyWeather1 = new DailyWeather(id1, minValue1, maxValue1);
+        DailyWeather dailyWeather2 = new DailyWeather(id2, minValue2, maxValue2);
+        MonthlyWeather monthlyWeather = new MonthlyWeather();
+        monthlyWeather.add(dailyWeather1);
+        monthlyWeather.add(dailyWeather2);
+        monthlyWeather.sortBySpread();
+
+        int receivedId = monthlyWeather.getIdOfMinSpread();
+        Assert.assertEquals("getSpread", expectedId, receivedId);
+    }
 }

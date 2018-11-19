@@ -1,11 +1,11 @@
 package de.exxcellent.challenge;
 
 /**
- * Weather Data of one day.
+ * Weather data of one day.
  *
  * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
-public class DailyWeather {
+public class DailyWeather implements Comparable<Object> {
 
     // we remember only attributes of interest
     int id;                 // = Day (from column 1)
@@ -25,5 +25,10 @@ public class DailyWeather {
     public int getSpread()
     {
         return maxValue - minValue;
+    }
+    @Override
+    public int compareTo(Object obj) {
+        DailyWeather dailyWeather = (DailyWeather) obj;
+        return this.getSpread() - dailyWeather.getSpread();
     }
 }
