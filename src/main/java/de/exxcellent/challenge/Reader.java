@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
  * A Reader class reading weather data from a .csv-file.
  * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
-public class Reader {
+public class Reader<Tcollection, Tsingle> implements IReader<Tcollection, Tsingle> {
 
     private String filename;
     private int colId;
@@ -15,12 +15,12 @@ public class Reader {
     private int colMax;
     private char separator;
 
-    public MonthlyWeather monthlyWeather = new MonthlyWeather();
+    private <Tcollection> CollectedData = new CollectedData<Tsingle>();
 
     /**
      * constructor with configuration parameters
      */
-    public Reader(String filename, int colId, int colMin, int colMax, char separator) {
+    public Reader<Tcollection, Tsingle>(String filename, int colId, int colMin, int colMax, char separator) {
 
         this.filename = filename;
         this.colId = colId;
@@ -28,33 +28,33 @@ public class Reader {
         this.colMax = colMax;
         this.separator = separator;
     }
-    public MonthlyWeather read() throws FileNotFoundException {
+    public <Tcollection> read() throws FileNotFoundException {
 
         Scanner lineReader = new Scanner(new File(filename));
         boolean firstLine = true;
-        DailyWeather dailyWeather;
-        MonthlyWeather monthlyWeather = new MonthlyWeather();
+        <Tsingle> singleData;
+        Tcollection collectedData = new CollectedData<Tsingle>();
 
         while (lineReader.hasNext()) {
 
             String line = lineReader.nextLine();
             // System.out.println(line);
             if (!firstLine) {           // skip first line (header)
-                dailyWeather = fromCSVline(line);
-                monthlyWeather.add(dailyWeather);
+                singleData = fromCSVline(line);
+                collectedData.add(singleData);
             }
             firstLine = false;
         }
-        return monthlyWeather;
+        return collectedData;
     }
-    private DailyWeather fromCSVline(String line) {
+    private <Tsingle> fromCSVline(String line) {
 
         String[] attributes = line.split(",");
         String strId = attributes[colId-1];        // -1 because we have an index
         String strMin = attributes[colMin-1];
         String strMax = attributes[colMax-1];
-        
-        return new DailyWeather(Integer.parseInt(strId), Integer.parseInt(strMin),
+
+        return new SingleData<Tsingle>(Integer.parseInt(strId), Integer.parseInt(strMin),
                                                          Integer.parseInt(strMax));
     }
 }
