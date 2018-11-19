@@ -12,10 +12,14 @@ import java.io.FileNotFoundException;
  */
 public final class App {
 
-    public static final String FILENAME = "src/main/resources/de/exxcellent/challenge/weather.csv";
+    public static final String filename = "src/main/resources/de/exxcellent/challenge/weather.csv";
+    public static final int colId  = 1;
+    public static final int colMin = 3;
+    public static final int colMax = 2;
+    public static final char separator = ',';
 
-    public Reader reader = new Reader();
-
+    public Reader reader = new Reader(filename, colId, colMin, colMax, separator);
+    public MonthlyWeather monthlyWeather;
     // private Vector<String> lineVector;
 
     public static void main(String... args) {
@@ -25,7 +29,7 @@ public final class App {
             App app = new App();
 
             System.out.printf("... starting reading %n");
-            app.reader.read(FILENAME);
+            app.reader.read(); // monthlyWeather = ...
 
         // String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
         // String teamWithSmallesGoalSpread = "A good team"; // Your goal analysis function call …
