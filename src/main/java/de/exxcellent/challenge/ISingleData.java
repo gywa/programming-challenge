@@ -5,11 +5,12 @@ package de.exxcellent.challenge;
  *
  * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
-public class ISingleData implements Comparable<Object> {
+public interface ISingleData extends Comparable<Object> {
 
-    public ISingleData(int id, int min, int max);
-    public int getId();
+    public String getName();
+    public String getId();
     public int getSpread();
+    public int getAbsoluteSpread();
     @Override
     public int compareTo(Object obj);
 }

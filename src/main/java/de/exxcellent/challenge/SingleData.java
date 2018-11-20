@@ -8,13 +8,14 @@ package de.exxcellent.challenge;
 public class SingleData implements ISingleData {
 
     // we remember only attributes of interest
-    String name = "?";
-    int id;                 // = Day (from column 1)
+    String name;
+    String id;              // = Name (from column 1)
     int minValue;           // = MnT (from column 3)
     int maxValue;           // = MxT (from column 2)
 
-    public SingleData(int id, int min, int max) {
+    public SingleData(String name, String id, int min, int max) {
 
+        this.name = name;
         this.id = id;
         this.minValue = min;
         this.maxValue = max;
@@ -23,7 +24,7 @@ public class SingleData implements ISingleData {
     {
         return name;
     }
-    public int getId()
+    public String getId()
     {
         return id;
     }
@@ -31,9 +32,13 @@ public class SingleData implements ISingleData {
     {
         return maxValue - minValue;
     }
+    public int getAbsoluteSpread()
+    {
+        return Math.abs(getSpread());
+    }
     @Override
     public int compareTo(Object obj) {
-        SingleData singleData = (SingleData) obj;
-        return this.getSpread() - singleData.getSpread();
+        ISingleData singleData = (ISingleData) obj;
+        return this.getAbsoluteSpread() - singleData.getAbsoluteSpread();
     }
 }

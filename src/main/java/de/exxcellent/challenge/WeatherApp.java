@@ -17,18 +17,17 @@ public final class WeatherApp {
     public static final int colMax = 2;
     public static final char separator = ',';
 
-    public Reader<MonthlyWeather, DailyWeather> reader = new Reader<>(filename, colId, colMin, colMax, separator);
+    public Reader reader = new Reader(filename, colId, colMin, colMax, separator);
     public static void main(String... args) {
 
         // Your preparation code …
         try {
             WeatherApp app = new WeatherApp();
 
-            MonthlyWeather monthlyWeather = app.reader.read();
-            monthlyWeather.verify();
-            // monthlyWeather.write();
-            monthlyWeather.writeSummary();
-
+            ICollectedData collectedData = app.reader.read();
+            collectedData.verify();
+            // collectedData.write();
+            collectedData.writeSummary();
         } catch (IOException e) {
             System.out.printf("... error: IOException %e!%n", e);
         }

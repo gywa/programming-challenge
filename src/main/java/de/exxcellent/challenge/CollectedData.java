@@ -10,15 +10,15 @@ import java.util.Iterator;
  *
  * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
-public class CollectedData<T> implements ICollectedData<T> {    // TODO better name?
+public class CollectedData implements ICollectedData {    // TODO better name?
 
-    List<T> collected = new ArrayList<T>();
+    List<ISingleData> collected = new ArrayList<ISingleData>();
 
-    public void add(<T> t)
+    public void add(ISingleData singleData)
     {
-        collected.add(t);
+        collected.add(singleData);
     }
-    public int getIdOfMinSpread()
+    public String getIdOfMinSpread()
     {
         sortBySpread();
         return collected.get(0).getId();   // TOCHECK: same value for several days?
@@ -37,11 +37,11 @@ public class CollectedData<T> implements ICollectedData<T> {    // TODO better n
     public void write()
     {
         collected.forEach (singleData -> {
-            System.out.printf("spread of id %d: %d%n", singleData.getId(), singleData.getSpread());
+            System.out.printf("spread of id %s: %d%n", singleData.getId(), singleData.getSpread());
         });
     }
     public void writeSummary()
     {
-        System.out.printf("id with smallest spread: %d%n", getIdOfMinSpread());
+        System.out.printf("id with smallest absolute spread: %s%n", getIdOfMinSpread());
     }
 }

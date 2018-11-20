@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
  * A Reader class reading weather data from a .csv-file.
  * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
-public class Reader<Tcollection, Tsingle> implements IReader<Tcollection, Tsingle> {
+public class Reader implements IReader {
 
     private String filename;
     private int colId;
@@ -15,12 +15,15 @@ public class Reader<Tcollection, Tsingle> implements IReader<Tcollection, Tsingl
     private int colMax;
     private char separator;
 
-    private <Tcollection> CollectedData = new CollectedData<Tsingle>();
-
-    /**
+    /*
      * constructor with configuration parameters
+     * @param filename - name of the file that will be read
+     * @param colId - number of the column containing the id
+     * @param colMin - number of the column containing the minimum value
+     * @param colMax - number of the column containing the maximum value
+     * @param separator - char separating the csv columns
      */
-    public Reader<Tcollection, Tsingle>(String filename, int colId, int colMin, int colMax, char separator) {
+    public Reader(String filename, int colId, int colMin, int colMax, char separator) {
 
         this.filename = filename;
         this.colId = colId;
@@ -28,12 +31,15 @@ public class Reader<Tcollection, Tsingle> implements IReader<Tcollection, Tsingl
         this.colMax = colMax;
         this.separator = separator;
     }
-    public <Tcollection> read() throws FileNotFoundException {
+    public String getFilename() {
+        return filename;
+    }
+    public ICollectedData read() throws FileNotFoundException {
 
-        Scanner lineReader = new Scanner(new File(filename));
+        Scanner lineReader = new Scanner(new File(getFilename()));
         boolean firstLine = true;
-        <Tsingle> singleData;
-        Tcollection collectedData = new CollectedData<Tsingle>();
+        ISingleData singleData;
+        ICollectedData collectedData = new CollectedData();
 
         while (lineReader.hasNext()) {
 
@@ -47,14 +53,14 @@ public class Reader<Tcollection, Tsingle> implements IReader<Tcollection, Tsingl
         }
         return collectedData;
     }
-    private <Tsingle> fromCSVline(String line) {
+    private ISingleData fromCSVline(String line) {
 
         String[] attributes = line.split(",");
         String strId = attributes[colId-1];        // -1 because we have an index
         String strMin = attributes[colMin-1];
         String strMax = attributes[colMax-1];
 
-        return new SingleData<Tsingle>(Integer.parseInt(strId), Integer.parseInt(strMin),
-                                                         Integer.parseInt(strMax));
+        return new DailyWeather(strId, Integer.parseInt(strMin),
+                                       Integer.parseInt(strMax));
     }
 }

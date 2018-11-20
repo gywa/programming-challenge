@@ -10,10 +10,10 @@ import java.util.Iterator;
  *
  * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
-public interface ICollectedData<T> {    // TODO better name?
+public interface ICollectedData {    // TODO better name?
 
-    public void add(<T> t);
-    public int getIdOfMinSpread();
+    public void add(ISingleData singleData);
+    public String getIdOfMinSpread();
     public void sortBySpread();
     public void verify();
     public void write();

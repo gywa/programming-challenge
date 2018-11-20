@@ -22,20 +22,20 @@ public class WeatherDataTest {
         int maxValue = 55;
         int expectedSpread = maxValue - minValue;
 
-        DailyWeather dailyWeather = new DailyWeather(2, minValue, maxValue);
+        DailyWeather dailyWeather = new DailyWeather("2", minValue, maxValue);
         int receivedSpread = dailyWeather.getSpread();
         Assert.assertEquals("getSpread", expectedSpread, receivedSpread);
     }
     @Test
     public void weatherDataTest_sortBySpread() {
 
-        int id1 = 2;
+        String id1 = "2";
         int minValue1 = 55;
         int maxValue1 = 85;
-        int id2 = 23;
+        String id2 = "23";
         int minValue2 = 66;
         int maxValue2 = 68;
-        int expectedId = id2;
+        String expectedId = id2;
         int expectedSpread = 2;
 
         DailyWeather dailyWeather1 = new DailyWeather(id1, minValue1, maxValue1);
@@ -45,7 +45,36 @@ public class WeatherDataTest {
         monthlyWeather.add(dailyWeather2);
         monthlyWeather.sortBySpread();
 
-        int receivedId = monthlyWeather.getIdOfMinSpread();
-        Assert.assertEquals("getSpread", expectedId, receivedId);
+        String receivedId = monthlyWeather.getIdOfMinSpread();
+        Assert.assertEquals("id of min spread -", expectedId, receivedId);
+    }
+    @Test
+    public void weatherDataTest_sortBySpread_Absolute() {
+
+        String id1 = "1";
+        int minValue1 = 55;
+        int maxValue1 = 85;
+
+        String id2 = "99";
+        int minValue2 = 0;
+        int maxValue2 = -5;
+
+        String id3 = "23";
+        int minValue3 = -66;
+        int maxValue3 = 68;
+
+        String expectedId = id2;
+
+        DailyWeather dailyWeather1 = new DailyWeather(id1, minValue1, maxValue1);
+        DailyWeather dailyWeather2 = new DailyWeather(id2, minValue2, maxValue2);
+        DailyWeather dailyWeather3 = new DailyWeather(id3, minValue3, maxValue3);
+        MonthlyWeather monthlyWeather = new MonthlyWeather();
+        monthlyWeather.add(dailyWeather1);
+        monthlyWeather.add(dailyWeather2);
+        monthlyWeather.add(dailyWeather3);
+        monthlyWeather.sortBySpread();
+
+        String receivedId = monthlyWeather.getIdOfMinSpread();
+        Assert.assertEquals("id of min spread -", expectedId, receivedId);
     }
 }

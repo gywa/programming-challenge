@@ -28,7 +28,6 @@ public class ReaderTest {
         boolean exceptionReceived = false;
 
         String filename_OK = "src/main/resources/de/exxcellent/challenge/weather.csv";
-        //public static final String FILENAME_OK = "src/main/resources/de/exxcellent/challenge/weather.csv";
         try {
             Reader reader = new Reader(filename_OK, colId, colMin, colMax, separator);
             reader.read();

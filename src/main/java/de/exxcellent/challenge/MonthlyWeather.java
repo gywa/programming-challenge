@@ -10,7 +10,7 @@ import java.util.Iterator;
  *
  * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
-public class MonthlyWeather extends CollectedData<DailyWeather> {
+public class MonthlyWeather extends CollectedData {
 
     public void write()
     {

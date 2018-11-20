@@ -7,9 +7,8 @@ package de.exxcellent.challenge;
  */
 public class DailyWeather extends SingleData {
 
-    public DailyWeather(int id, int min, int max) {
+    public DailyWeather(String id, int min, int max) {
 
-        this.name = "Day";
-        super(id, min, max);
+        super("Day", id, min, max);
     }
 }
