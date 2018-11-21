@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 /**
  * Java application that reads the wheather data from a .csv-file
  * and outputs the day with the smallest temperature spread.
- * The name of the .csv-file is "weather.csv". It is taken from the resources folder.
+ * Currently it uses a fixed file name "weather.csv" taken from the resource folder.
  *
  *  @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */

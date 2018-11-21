@@ -6,24 +6,33 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Collected data of the given type.
+ * Collected data of the type ISingleData.
  *
  * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
 public class CollectedData implements ICollectedData {    // TODO better name?
 
     List<ISingleData> collected = new ArrayList<ISingleData>();
+    String dataName;
 
     public void add(ISingleData singleData)
     {
         collected.add(singleData);
+    }
+    public String getDataName()
+    {
+        return dataName;
+    }
+    public void setDataName(String name)
+    {
+        dataName = name;
     }
     public String getIdOfMinSpread()
     {
         sortBySpread();
         return collected.get(0).getId();   // TOCHECK: same value for several days?
     }
-    public void sortBySpread()
+    public void sortBySpread()  // TODO use correct compareTo method (currently used: compareTo from SingleData!)
     {
         Collections.sort(collected);
         /* not OK: Collections.sort(dailyWeathers, (a, b) -> {
@@ -37,11 +46,12 @@ public class CollectedData implements ICollectedData {    // TODO better name?
     public void write()
     {
         collected.forEach (singleData -> {
-            System.out.printf("spread of id %s: %d%n", singleData.getId(), singleData.getSpread());
+            System.out.printf("spread of %s %s: %d (%d-%d)%n", getDataName(), singleData.getId(), singleData.getAbsoluteSpread(),
+                                singleData.getMinValue(), singleData.getMaxValue());
         });
     }
     public void writeSummary()
     {
-        System.out.printf("id with smallest absolute spread: %s%n", getIdOfMinSpread());
+        System.out.printf("%s with smallest absolute spread: %s%n", getDataName(), getIdOfMinSpread());
     }
 }

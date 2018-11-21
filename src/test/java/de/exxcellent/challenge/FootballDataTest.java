@@ -5,10 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the weather data read from the csv file.
+ * Tests for the football data read from the csv file.
  * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
-public class WeatherDataTest {
+public class FootballDataTest {
 
     String filename;
     private int colId;
@@ -26,8 +26,8 @@ public class WeatherDataTest {
     public void weatherDataTest_getDataName() {
 
         ICollectedData collectedData;
-        filename = "src/main/resources/de/exxcellent/challenge/weather.csv";
-        String expectedDataName = "Day";
+        filename = "src/main/resources/de/exxcellent/challenge/football.csv";
+        String expectedDataName = "Team";
 
         try {
             Reader reader = new Reader(filename, colId, colMin, colMax, separator);
@@ -41,13 +41,13 @@ public class WeatherDataTest {
         }
     }
     @Test
-    public void weatherDataTest_getIdOfMinSpread() {
+    public void footballAppTest_getIdOfMinSpread() {
 
         ICollectedData collectedData;
-        filename = "src/main/resources/de/exxcellent/challenge/weather.csv";
-        String expectedIdOfMinSpread = "14";
+        String expectedIdOfMinSpread = "Aston_Villa";
 
         try {
+            // FootballApp app = new FootballApp();
             Reader reader = new Reader(filename, colId, colMin, colMax, separator);
             collectedData = reader.read();
             collectedData.verify();
@@ -61,11 +61,11 @@ public class WeatherDataTest {
     }
     private void setupConfig() {
 
-        // config for .csv file containing weather data
-        filename = "src/main/resources/de/exxcellent/challenge/weather.csv";
-        colId  = 1;
-        colMin = 3;
-        colMax = 2;
+        // config for .csv file containing football data
+        filename = "src/main/resources/de/exxcellent/challenge/football.csv";
+        int colId  = 1;
+        int colMin = 7;
+        int colMax = 6;
         separator = ',';
     }
 }

@@ -7,35 +7,38 @@ import org.junit.Test;
 import java.io.FileNotFoundException;
 
 /**
-* Junit tests for the Reader class.
-* @author Gabriele Wanielik gabriele.wanielik@icloud.com
+ * Tests for the Reader class. 'weather.csv' is required.
+ * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
 public class ReaderTest {
 
-    private int colId  = 1;
-    private int colMin = 3;
-    private int colMax = 2;
-    private char separator = ',';
+    String filename;
+    private int colId;
+    private int colMin;
+    private int colMax;
+    private char separator;
 
     @Before
     public void setUp() throws Exception {
-        ; // nothing
+
+        setup_weatherConfig();
     }
     @Test
     public void readerTest_noExcp_FileNotFound() {
 
         boolean exceptionExpected = false;
-        boolean exceptionReceived = false;
+        boolean exceptionReceived = true;
 
         String filename_OK = "src/main/resources/de/exxcellent/challenge/weather.csv";
         try {
             Reader reader = new Reader(filename_OK, colId, colMin, colMax, separator);
             reader.read();
-            Assert.assertEquals("FileNotFoundException", exceptionExpected, exceptionReceived);
+            exceptionReceived = false;
 
         } catch (FileNotFoundException e) {
-            ; // do nothing
+            exceptionReceived = true;
         }
+        Assert.assertEquals("no FileNotFoundException", exceptionExpected, exceptionReceived);
     }
     @Test
     public void readerTest_excp_FileNotFound() {
@@ -47,10 +50,19 @@ public class ReaderTest {
         try {
             Reader reader = new Reader(filename_NOTOK, colId, colMin, colMax, separator);
             reader.read();
+            exceptionReceived = false;
 
         } catch (FileNotFoundException e) {
             exceptionReceived = true;
-            Assert.assertEquals("FileNotFoundException", exceptionExpected, exceptionReceived);
         }
+        Assert.assertEquals("FileNotFoundException", exceptionExpected, exceptionReceived);
+    }
+    private void setup_weatherConfig() {
+
+        filename = "src/main/resources/de/exxcellent/challenge/weather.csv";
+        colId  = 1;
+        colMin = 3;
+        colMax = 2;
+        separator = ',';
     }
 }

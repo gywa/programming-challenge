@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Weather Data of one month.
+ * Weather Data of one month - unused!
  *
  * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
@@ -15,12 +15,12 @@ public class MonthlyWeather extends CollectedData {
     public void write()
     {
         collected.forEach (singleData -> {
-            System.out.printf("spread on %d. %s: %d%n", singleData.getId(),
-                                singleData.getName(),singleData.getSpread());
+            System.out.printf("Spread of %d. %s: %d%n", getDataName(), singleData.getId(),
+                                singleData.getAbsoluteSpread());
         });
     }
     public void writeSummary()
     {
-        System.out.printf("Day with smallest temperature spread: %d%n", getIdOfMinSpread());
+        System.out.printf("%s with smallest spread: %d%n", getDataName(), getIdOfMinSpread());
     }
 }

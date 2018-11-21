@@ -4,18 +4,20 @@ import java.io.*;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 /**
- * A Reader class reading weather data from a .csv-file.
+ * A Reader class reading data from a .csv-file.
+ * Configuration parameters are provided during construction.
  * @author Gabriele Wanielik gabriele.wanielik@icloud.com
  */
 public class Reader implements IReader {
 
     private String filename;
+    private String dataName;    // from headerLine[colId]
     private int colId;
     private int colMin;
     private int colMax;
     private char separator;
 
-    /*
+    /**
      * constructor with configuration parameters
      * @param filename - name of the file that will be read
      * @param colId - number of the column containing the id
@@ -31,12 +33,9 @@ public class Reader implements IReader {
         this.colMax = colMax;
         this.separator = separator;
     }
-    public String getFilename() {
-        return filename;
-    }
     public ICollectedData read() throws FileNotFoundException {
 
-        Scanner lineReader = new Scanner(new File(getFilename()));
+        Scanner lineReader = new Scanner(new File(filename));
         boolean firstLine = true;
         ISingleData singleData;
         ICollectedData collectedData = new CollectedData();
@@ -45,7 +44,11 @@ public class Reader implements IReader {
 
             String line = lineReader.nextLine();
             // System.out.println(line);
-            if (!firstLine) {           // skip first line (header)
+            if (firstLine) {
+                evalCSVheader(line);
+                collectedData.setDataName(dataName);
+            }
+            else {
                 singleData = fromCSVline(line);
                 collectedData.add(singleData);
             }
@@ -53,6 +56,11 @@ public class Reader implements IReader {
         }
         return collectedData;
     }
+    /**
+     * extracts a single data from one csv line.
+     * @param line - string of a csv line (items separated by the separator char)
+     * @returns ISingleData - a single data extracted
+     */
     private ISingleData fromCSVline(String line) {
 
         String[] attributes = line.split(",");
@@ -62,5 +70,15 @@ public class Reader implements IReader {
 
         return new DailyWeather(strId, Integer.parseInt(strMin),
                                        Integer.parseInt(strMax));
+    }
+    /**
+     * extracts the data name from the header line of the csv line
+     * and stores it in this class.
+     * @param line - string of a heading csv line (items separated by the separator char)
+     */
+    private void evalCSVheader(String line) {
+
+        String[] attributes = line.split(",");
+        dataName = attributes[colId-1];    // -1 because we have an index
     }
 }

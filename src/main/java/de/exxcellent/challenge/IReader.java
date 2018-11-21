@@ -10,8 +10,8 @@ import java.io.FileNotFoundException;
 public interface IReader {
 
     /**
-     * reads the content of the associated file and stores the data in the given type
+     * reads the content of the associated file and returns the read data
+     * @return collected data extracted from the file
      */
     public ICollectedData read() throws FileNotFoundException;
-    public String getFilename();    // @NonNull ... not working?
 }
